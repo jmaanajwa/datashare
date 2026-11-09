@@ -1,0 +1,42 @@
+﻿<div class="page">
+  <app-site-header />
+  <main>
+    <section class="upload-card" [class.empty]="!file()" [class.dragging]="dragActive()"
+      (dragover)="$event.preventDefault(); dragActive.set(true)" (dragleave)="dragActive.set(false)" (drop)="drop($event)">
+      @if (!file()) {
+        <h1>Tu veux partager un fichier ?</h1>
+        <button class="upload-trigger" type="button" aria-label="Choisir un fichier à partager" (click)="uploadInput.click()">
+          <span class="upload-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 21v-9m0 0-4 4m4-4 4 4M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29" />
+            </svg>
+          </span>
+        </button>
+        <input #uploadInput id="upload-input" type="file" [accept]="acceptedTypes" (change)="choose($event)" />
+      } @else {
+        <h1>Ajouter un fichier</h1>
+        <div class="file-row">
+          <span class="file-icon" aria-hidden="true">▧</span>
+          <span class="file-name" [title]="file()!.name">{{ file()!.name }}<small>{{ files.formatSize(file()!.size) }}</small></span>
+          <button class="outline" type="button" (click)="remove()">Retirer</button>
+        </div>
+        @if (complete()) {
+          <p class="success" role="status">Félicitations, ton fichier serait conservé.</p>
+          <a class="share-link" [href]="link()">{{ link() }}</a>
+          <button class="secondary" type="button" (click)="copy()">Copier le lien</button>
+        } @else {
+          <label for="password">Mot de passe</label>
+          <input id="password" type="password" [(ngModel)]="password" placeholder="Optionnel" autocomplete="new-password" />
+          <label for="expiration">Expiration</label>
+          <select id="expiration" [(ngModel)]="expiration">
+            <option value="1">Une journée</option>
+            <option value="7">Une semaine</option>
+          </select>
+          <button class="secondary" type="button" [disabled]="uploading()" (click)="upload()">{{ uploading() ? 'Téléversement…' : 'Téléverser' }}</button>
+        }
+      }
+      @if (error()) { <p class="error" role="alert">{{ error() }}</p> }
+    </section>
+  </main>
+  <footer>Copyright DataShare<sup>©</sup> 2025</footer>
+</div>

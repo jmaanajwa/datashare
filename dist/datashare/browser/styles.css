@@ -1,0 +1,1 @@
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed}button:focus-visible,a:focus-visible{outline:3px solid #22132b;outline-offset:4px}

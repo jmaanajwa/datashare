@@ -1,0 +1,55 @@
+:host { display: block; min-height: 100dvh; color: #171414; }
+.dashboard { display: flex; min-height: 100dvh; background: #fffaf7; overflow-x: hidden; }
+.sidebar { width: 194px; flex: 0 0 194px; display: flex; flex-direction: column; padding: 14px clamp(14px, 2vw, 18px); color: #fff; background: linear-gradient(165deg, #ffb384 0%, #ed8775 48%, #df6065 100%); }
+.brand { color: #fff; font-size: 23px; font-weight: 700; text-decoration: none; letter-spacing: -.4px; }
+nav { margin-top: 32px; }
+.selected { display: block; padding: 8px 12px; border-radius: 9px; color: #814011; background: rgba(255, 216, 195, .8); font-size: 12px; font-weight: 700; text-decoration: none; }
+.sidebar small { margin-top: auto; font-size: 12px; white-space: nowrap; }
+.content { flex: 1; min-width: 0; }
+.topbar { min-height: 48px; display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 10px 17px; padding: 10px clamp(16px, 4vw, 46px) 10px 18px; border-bottom: 1px solid #f1c6ae; background: #fff0e8; }
+.add-files { padding: 5px 11px; border-radius: 7px; color: #fff; background: #302c29; font-size: 12px; text-decoration: none; }
+.logout { display: inline-flex; align-items: center; gap: 5px; padding: 0; border: 0; color: #e8752a; background: transparent; font-size: 12px; }
+.files-section { padding: clamp(16px, 3vw, 28px) clamp(16px, 3vw, 40px); }
+h1 { margin: 0; font-size: clamp(21px, 3vw, 28px); line-height: 1.2; }
+.tabs { display: inline-flex; margin: 20px 0 17px; overflow: hidden; border: 1px solid #ffd0bb; border-radius: 16px; }
+.tabs button { padding: 4px 12px; border: 0; border-right: 1px solid #ffd0bb; color: #2b2421; background: #fff5ef; font-size: 12px; }
+.tabs button:last-child { border-right: 0; }
+.tabs .active { color: #fff; background: #e97468; }
+.file-list { display: grid; gap: 12px; }
+.file-item { min-height: 42px; display: grid; grid-template-columns: 18px minmax(0, 1fr) auto auto auto; align-items: center; gap: 8px 12px; padding: 7px 12px; border: 1px solid #ffd4bd; border-radius: 7px; background: rgba(255, 247, 242, .55); }
+.file-icon { width: 18px; flex: 0 0 18px; color: #171414; font-size: 22px; line-height: 1; text-align: center; }
+.file-info { min-width: 0; font-size: 12px; }
+.file-info strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-info span { display: block; margin-top: 2px; font-size: 11px; }
+.expired { color: #e32d26; }
+.expired-note { grid-column: 2 / -1; color: #9b918d; font-size: 11px; }
+.lock { color: #3d3835; font-size: 16px; }
+.delete-button, .access-button { padding: 4px 9px; border: 1px solid #ff9e6c; border-radius: 7px; color: #ed7628; background: #fffaf7; font-size: 12px; text-decoration: none; white-space: nowrap; }
+.delete-button:disabled { opacity: .55; }
+.access-button span { padding-left: 4px; font-size: 16px; line-height: 0; }
+.state-message { color: #81756f; font-size: 13px; }
+.state-message.error { color: #c52e2e; }
+@media (max-width: 700px) {
+  .dashboard { display: block; }
+  .sidebar { width: 100%; min-height: 124px; }
+  .sidebar small { margin-top: 24px; }
+  .topbar { justify-content: space-between; padding: 10px 16px; }
+  .files-section { padding: 20px 16px; }
+  .file-item { grid-template-columns: 18px minmax(0, 1fr); align-items: start; }
+  .lock,
+  .delete-button,
+  .access-button { grid-column: 2; justify-self: start; }
+  .delete-button,
+  .access-button { width: min(100%, 220px); text-align: center; }
+  .expired-note { grid-column: 2; margin-left: 0; }
+}
+
+@media (max-width: 380px) {
+  .sidebar { min-height: 116px; padding-block: 12px; }
+  nav { margin-top: 24px; }
+  .topbar { align-items: stretch; }
+  .add-files,
+  .logout { min-height: 32px; display: inline-flex; align-items: center; }
+  .add-files { padding-inline: 10px; }
+  .file-item { padding: 8px; }
+}

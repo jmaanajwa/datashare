@@ -1,0 +1,53 @@
+﻿<div class="page">
+  <app-site-header />
+
+  <main>
+    <section class="card" aria-labelledby="register-title">
+      <h1 id="register-title">Créer un compte</h1>
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="field">
+          <label for="register-email">Email</label>
+          <input id="register-email" type="email" formControlName="email" placeholder="Saisissez votre email..."
+            autocomplete="email" [attr.aria-invalid]="submitted() && form.controls.email.invalid"
+            [attr.aria-describedby]="submitted() && form.controls.email.invalid ? 'register-email-error' : null" />
+          @if (submitted() && form.controls.email.invalid) {
+            <p id="register-email-error" class="field-error" role="alert">Saisissez une adresse email valide.</p>
+          }
+        </div>
+
+        <div class="field">
+          <label for="register-password">Mot de passe</label>
+          <input id="register-password" type="password" formControlName="password" placeholder="Saisissez votre mot de passe..."
+            autocomplete="new-password" [attr.aria-invalid]="submitted() && form.controls.password.invalid"
+            [attr.aria-describedby]="submitted() && form.controls.password.invalid ? 'register-password-error' : null" />
+          @if (submitted() && form.controls.password.invalid) {
+            <p id="register-password-error" class="field-error" role="alert">Le mot de passe est obligatoire.</p>
+          }
+        </div>
+
+        <div class="field">
+          <label for="register-confirm">Verification du mot de passe</label>
+          <input id="register-confirm" type="password" formControlName="confirmPassword" placeholder="Saisissez le à nouveau"
+            autocomplete="new-password" [attr.aria-invalid]="submitted() && form.controls.confirmPassword.invalid"
+            [attr.aria-describedby]="submitted() && form.controls.confirmPassword.invalid ? 'register-confirm-error' : null" />
+          @if (submitted() && form.controls.confirmPassword.invalid) {
+            <p id="register-confirm-error" class="field-error" role="alert">Les mots de passe doivent correspondre.</p>
+          }
+        </div>
+
+        @if (confirmation()) {
+          <p class="confirmation" role="status">{{ confirmation() }}</p>
+        }
+        @if (auth.error()) {
+          <p class="field-error" role="alert">{{ auth.error() }}</p>
+        }
+        <a routerLink="/login" class="switch">J'ai déjà un compte</a>
+        <button class="submit" type="submit" [disabled]="auth.loading()">
+          {{ auth.loading() ? 'Création…' : 'Créer mon compte' }}
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <footer>Copyright DataShare<sup>©</sup> 2025</footer>
+</div>

@@ -1,0 +1,97 @@
+﻿@use '../../shared/styles/auth-page';
+
+.download-card h1 {
+  margin-bottom: 34px;
+}
+
+.file-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 0 8px;
+}
+
+.file-icon {
+  flex-shrink: 0;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.file-details {
+  min-width: 0;
+  line-height: 24px;
+
+  small {
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+.file-name {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  margin: 0 0 16px;
+  padding: 6px 7px;
+  border: 1px solid #a8c5ff;
+  border-radius: 8px;
+  background: #e3ecff;
+  color: #28457f;
+  font-size: 14px;
+  line-height: 18px;
+  overflow-wrap: anywhere;
+}
+
+.notice svg,
+.download-button svg {
+  flex-shrink: 0;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.notice-warning {
+  border-color: #f5c2a7;
+  background: #fff5ef;
+  color: #b95b23;
+}
+
+.notice-error {
+  border-color: #ff9c9f;
+  background: #ffe2e3;
+  color: #b62426;
+}
+
+.download-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+
+  &:disabled {
+    border-color: #e3dedb;
+    background: #f0edeb;
+    color: #b0a59c;
+  }
+}
+
+.message-card {
+  h1 { margin-bottom: 26px; }
+  .notice { margin-bottom: 0; }
+}
+
+.loading {
+  margin: 0;
+  text-align: center;
+}

@@ -1,0 +1,40 @@
+﻿<div class="page">
+  <app-site-header />
+
+  <main>
+    <section class="card" aria-labelledby="login-title">
+      <h1 id="login-title">Connexion</h1>
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="field">
+          <label for="login-email">Email</label>
+          <input id="login-email" type="email" formControlName="email" placeholder="Saisissez votre email..."
+            autocomplete="email" [attr.aria-invalid]="submitted() && form.controls.email.invalid"
+            [attr.aria-describedby]="submitted() && form.controls.email.invalid ? 'login-email-error' : null" />
+          @if (submitted() && form.controls.email.invalid) {
+            <p id="login-email-error" class="field-error" role="alert">Saisissez une adresse email valide.</p>
+          }
+        </div>
+
+        <div class="field">
+          <label for="login-password">Mot de passe</label>
+          <input id="login-password" type="password" formControlName="password" placeholder="Saisissez votre mot de passe..."
+            autocomplete="current-password" [attr.aria-invalid]="submitted() && form.controls.password.invalid"
+            [attr.aria-describedby]="submitted() && form.controls.password.invalid ? 'login-password-error' : null" />
+          @if (submitted() && form.controls.password.invalid) {
+            <p id="login-password-error" class="field-error" role="alert">Le mot de passe est obligatoire.</p>
+          }
+        </div>
+
+        @if (auth.error()) {
+          <p class="field-error" role="alert">{{ auth.error() }}</p>
+        }
+        <a routerLink="/register" class="switch">Créer un compte</a>
+        <button class="submit" type="submit" [disabled]="auth.loading()">
+          {{ auth.loading() ? 'Connexion…' : 'Connexion' }}
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <footer>Copyright DataShare<sup>©</sup> 2025</footer>
+</div>

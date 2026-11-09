@@ -1,0 +1,53 @@
+<div class="dashboard">
+  <aside class="sidebar">
+    <a class="brand" routerLink="/dashboard">DataShare</a>
+    <nav aria-label="Navigation principale">
+      <a class="selected" routerLink="/dashboard">Mes fichiers</a>
+    </nav>
+    <small>Copyright DataShare© 2025</small>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <a routerLink="/upload" class="add-files">Ajouter des fichiers</a>
+      <button type="button" class="logout" (click)="auth.logout()"><span aria-hidden="true">↪</span>Déconnexion</button>
+    </header>
+
+    <section class="files-section" aria-labelledby="files-title">
+      <h1 id="files-title">Mes fichiers</h1>
+      <div class="tabs" role="tablist" aria-label="Filtrer les fichiers">
+        <button type="button" role="tab" [attr.aria-selected]="filter() === 'all'" [class.active]="filter() === 'all'" (click)="filter.set('all')">Tous</button>
+        <button type="button" role="tab" [attr.aria-selected]="filter() === 'active'" [class.active]="filter() === 'active'" (click)="filter.set('active')">Actifs</button>
+        <button type="button" role="tab" [attr.aria-selected]="filter() === 'expired'" [class.active]="filter() === 'expired'" (click)="filter.set('expired')">Expiré</button>
+      </div>
+
+      @if (loading()) {
+        <p class="state-message">Chargement…</p>
+      } @else if (error()) {
+        <p class="state-message error">{{ error() }}</p>
+      } @else if (visible().length === 0) {
+        <p class="state-message">Aucun fichier dans cette catégorie.</p>
+      } @else {
+        <div class="file-list">
+          @for (file of visible(); track file.id) {
+            <article class="file-item" [class.is-expired]="file.status === 'expired'">
+              <span class="file-icon" aria-hidden="true">{{ fileType(file.name) === 'image' ? '▧' : fileType(file.name) === 'audio' ? '♫' : fileType(file.name) === 'video' ? '▷' : '▤' }}</span>
+              <div class="file-info">
+                <strong>{{ file.name }}</strong>
+                @if (file.status === 'expired') { <span class="expired">Expiré</span> }
+                @else { <span>Expire dans {{ expirationLabel(file.expiresAt) }}</span> }
+              </div>
+              @if (file.status === 'expired') {
+                <span class="expired-note">Ce fichier a expiré, il n'est plus stocké chez nous</span>
+              } @else {
+                @if (file.protected) { <span class="lock" title="Fichier protégé" aria-label="Fichier protégé">♧</span> }
+                <button type="button" class="delete-button" (click)="remove(file.id)" [disabled]="deletingId() === file.id"><span aria-hidden="true">♜</span>Supprimer</button>
+                <a class="access-button" [routerLink]="['/download', file.token]">Accéder <span aria-hidden="true">→</span></a>
+              }
+            </article>
+          }
+        </div>
+      }
+    </section>
+  </main>
+</div>

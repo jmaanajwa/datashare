@@ -1,0 +1,8 @@
+<header class="site-header">
+  <a routerLink="/upload" class="brand">DataShare</a>
+  @if (auth.isAuthenticated()) {
+    <a routerLink="/dashboard" class="login-button">Mon espace</a>
+  } @else {
+    <a routerLink="/login" class="login-button">Se connecter</a>
+  }
+</header>

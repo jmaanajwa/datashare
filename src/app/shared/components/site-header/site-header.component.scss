@@ -1,0 +1,36 @@
+﻿.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px 24px;
+  padding: var(--site-header-padding, clamp(12px, 2.5vw, 16px) clamp(16px, 6.7vw, 96px));
+}
+
+.brand {
+  min-width: 0;
+  overflow: hidden;
+  font-size: var(--site-brand-font-size, clamp(23px, 4vw, 32px));
+  line-height: var(--site-brand-line-height, normal);
+  font-weight: 700;
+  color: var(--site-brand-color, #111);
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.login-button {
+  flex: 0 0 auto;
+  background: var(--site-login-background, #302c29);
+  color: var(--site-login-color, #fff);
+  border-radius: var(--site-login-radius, 9px);
+  padding: var(--site-login-padding, 11px 13px);
+  text-decoration: none;
+  font-size: var(--site-login-font-size, 16px);
+  line-height: var(--site-login-line-height, normal);
+}
+
+@media (max-width: 600px) {
+  .site-header { gap: 10px 16px; }
+  .brand { font-size: var(--site-brand-font-size, clamp(22px, 7vw, 25px)); }
+  .login-button { font-size: var(--site-login-font-size, 13px); }
+}

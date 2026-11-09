@@ -1,0 +1,62 @@
+﻿<div class="page">
+  <app-site-header />
+
+  <main>
+    <section class="card download-card" aria-labelledby="download-title"
+      [class.message-card]="loading() || error() || file()?.status === 'expired'">
+      @if (loading()) {
+        <p class="loading" role="status">Chargement…</p>
+      } @else {
+        <h1 id="download-title">Télécharger un fichier</h1>
+        @if (error() || file()?.status === 'expired') {
+          <p class="notice notice-error" role="alert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m7.86 2-5.73 5.73v8.54L7.86 22h8.28l5.73-5.73V7.73L16.14 2ZM12 8v4m0 4h.01" />
+            </svg>
+            <span>{{ error() || "Ce fichier n'est plus disponible en téléchargement car il a expiré." }}</span>
+          </p>
+        } @else if (file()) {
+          <div class="file-row">
+            <svg class="file-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14 3H4v18h16V9l-6-6ZM14 3v6h6" />
+              <path d="m8 17 3-4 5 6H8Z" fill="currentColor" stroke="none" />
+              <circle cx="8" cy="9" r="1.5" fill="currentColor" stroke="none" />
+            </svg>
+            <div class="file-details">
+              <span class="file-name" [title]="file()!.name">{{ file()!.name }}</span>
+              <small>{{ files.formatSize(file()!.size) }}</small>
+            </div>
+          </div>
+
+          <p class="notice" [class.notice-warning]="file()!.expiresAt === 'demain'" role="status">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              @if (file()!.expiresAt === 'demain') {
+                <path d="m10.3 3.9-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3.1l-8-14a2 2 0 0 0-3.4 0ZM12 9v4m0 4h.01" />
+              } @else {
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 11v6m0-10h.01" />
+              }
+            </svg>
+            <span>Ce fichier expirera {{ file()!.expiresAt }}.</span>
+          </p>
+
+          @if (file()!.protected) {
+            <label for="download-password">Mot de passe</label>
+            <input id="download-password" type="password" [(ngModel)]="password"
+              placeholder="Saisissez le mot de passe..." autocomplete="current-password"
+              (keydown.enter)="download()" />
+          }
+
+          <button class="submit download-button" type="button" [disabled]="!canDownload()" (click)="download()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 13v8m-4-4 4 4 4-4M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29" />
+            </svg>
+            Télécharger
+          </button>
+        }
+      }
+    </section>
+  </main>
+
+  <footer>Copyright DataShare<sup>©</sup> 2025</footer>
+</div>
