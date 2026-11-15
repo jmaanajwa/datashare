@@ -1,4 +1,7 @@
 node_modules
 .angular/cache/
-dist/
-.angular
+/dist
+/tmp
+/.angular/
+.angular/
+.vscode/
