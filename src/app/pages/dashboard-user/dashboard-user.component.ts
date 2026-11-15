@@ -48,6 +48,7 @@ export class DashboardUserComponent implements OnInit {
 
   expirationLabel(date: string): string {
     const expiration = new Date(date);
+    if (Number.isNaN(expiration.getTime())) return 'date inconnue';
     const days = Math.max(0, Math.ceil((expiration.getTime() - Date.now()) / 86_400_000));
     return days === 1 ? '1 jour' : `${days} jours`;
   }

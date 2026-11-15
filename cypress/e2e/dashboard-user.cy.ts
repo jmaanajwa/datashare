@@ -39,6 +39,9 @@ describe('User dashboard', () => {
 
     cy.contains('h1', 'Mes fichiers').should('be.visible');
     cy.get('.file-item').should('have.length', 2);
+    cy.get('.file-item').first().find('.file-info span')
+      .should('contain', 'Expire dans')
+      .and('not.contain', 'NaN');
     cy.contains('button', 'Expiré').click();
     cy.get('.file-item').should('have.length', 1).and('contain', 'archive.pdf');
   });

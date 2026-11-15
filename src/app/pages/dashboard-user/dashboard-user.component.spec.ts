@@ -78,6 +78,17 @@ describe('DashboardUserComponent', () => {
     expect(component.files()).toEqual([files[1]]);
   });
 
+  it('formats the remaining expiration time from an ISO date', () => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2030-01-01T00:00:00Z'));
+
+    expect(component.expirationLabel('2030-01-02T00:00:00Z')).toBe('1 jour');
+    expect(component.expirationLabel('2030-01-03T00:00:00Z')).toBe('2 jours');
+    expect(component.expirationLabel('not-a-date')).toBe('date inconnue');
+
+    jest.useRealTimers();
+  });
+
   it('navigates to the upload page from the add-files button', () => {
     const addFiles = fixture.nativeElement.querySelector('.add-files') as HTMLAnchorElement;
 

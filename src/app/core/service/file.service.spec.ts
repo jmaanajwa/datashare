@@ -35,7 +35,7 @@ describe('FileService', () => {
     } });
 
     await expect(promise).resolves.toEqual({
-      link: 'http://localhost:8080/api/shares/token-1',
+      link: `${window.location.origin}/download/token-1`,
       expiresAt: new Date('2030-01-01T00:00:00Z'),
     });
   });
@@ -50,7 +50,8 @@ describe('FileService', () => {
     }]);
 
     await expect(promise).resolves.toEqual([expect.objectContaining({
-      id: 'file-1', token: 'token-1', name: 'photo.png', size: 2_000_000, status: 'active',
+      id: 'file-1', token: 'token-1', name: 'photo.png', size: 2_000_000,
+      expiresAt: '2030-01-01T00:00:00Z', status: 'active',
     })]);
     expect(service.formatSize(2_000_000)).toContain('2');
   });

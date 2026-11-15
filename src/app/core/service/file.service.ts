@@ -36,7 +36,10 @@ export class FileService {
     form.append('expirationDays', options.expiration);
     const response = await firstValueFrom(this.http.post<{ metadata: FileMetadata }>(
       `${API_CONFIG.baseUrl}/files`, form));
-    return { link: response.metadata.downloadLink, expiresAt: new Date(response.metadata.expirationDate) };
+    return {
+      link: this.toFrontendDownloadLink(response.metadata.downloadLink),
+      expiresAt: new Date(response.metadata.expirationDate),
+    };
   }
 
   async list(): Promise<SharedFile[]> {
@@ -78,9 +81,14 @@ export class FileService {
       token: metadata.downloadLink.split('/').pop() ?? metadata.id,
       name: metadata.name,
       size: metadata.size,
-      expiresAt: this.formatDate(metadata.expirationDate),
+      expiresAt: metadata.expirationDate,
       status: metadata.linkStatus,
     };
+  }
+
+  private toFrontendDownloadLink(downloadLink: string): string {
+    const token = decodeURIComponent(downloadLink.split('/').pop() ?? downloadLink);
+    return `${window.location.origin}/download/${encodeURIComponent(token)}`;
   }
 
   private formatDate(value: string): string {

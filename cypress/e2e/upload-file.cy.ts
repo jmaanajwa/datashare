@@ -16,7 +16,7 @@ describe('Upload file page', () => {
           size: 4,
           expirationDate: '2030-01-01T00:00:00Z',
           linkStatus: 'active',
-          downloadLink: 'http://localhost:4200/download/share-token',
+          downloadLink: 'http://localhost:8080/api/shares/share-token',
         },
       },
     }).as('uploadFile');

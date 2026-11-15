@@ -224,7 +224,15 @@ npm test
 npm run test:coverage
 ```
 
-Les tests unitaires couvrent notamment `AuthService`, `FileService`, `DashboardUserComponent` et `SiteHeaderComponent`.
+Résultat vérifié: **10 suites et 34 tests passés**.
+La couverture Jest est de **89,96 % en instructions**, **74,28 % en branches**,
+**92,15 % en fonctions** et **93,15 % en lignes**. Le seuil global de 70 % est
+configuré dans `jest.config.js`.
+
+Les tests unitaires couvrent `AuthService`, `FileService`, `authGuard`,
+`DownloadFileComponent`, `LoginComponent`, `RegisterComponent`,
+`UploadFileComponent`, `DashboardUserComponent`, `SiteHeaderComponent` et
+l'intercepteur HTTP de l'application.
 
 ### Tests E2E Cypress
 
