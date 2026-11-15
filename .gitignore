@@ -1,6 +1,6 @@
 node_modules
 .angular/cache/
-/dist
+/dist/
 /tmp
 /.angular/
 .angular/
