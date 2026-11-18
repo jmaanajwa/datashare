@@ -27,4 +27,15 @@ describe('Site header', () => {
     cy.url().should('include', '/dashboard');
     cy.wait('@listFiles');
   });
+
+  it('redirige vers la connexion si les données utilisateur sont invalides', () => {
+    cy.visit('/dashboard', {
+      onBeforeLoad: (window) => {
+        window.localStorage.setItem('datashare.token', 'test-token');
+        window.localStorage.setItem('datashare.user', '{invalid-json');
+      },
+    });
+
+    cy.url().should('include', '/login');
+  });
 });

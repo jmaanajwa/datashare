@@ -26,4 +26,34 @@ describe('Login page', () => {
     cy.wait('@listFiles');
     cy.contains('h1', 'Mes fichiers').should('be.visible');
   });
+
+  it('affiche le message d’erreur renvoyé par l’API', () => {
+    cy.intercept('POST', '**/api/auth/login', {
+      statusCode: 401,
+      body: { message: 'Compte bloqué' },
+    }).as('loginError');
+
+    cy.visit('/login');
+    cy.get('#login-email').type('alice@example.com');
+    cy.get('#login-password').type('wrong');
+    cy.get('button.submit').click();
+
+    cy.wait('@loginError');
+    cy.get('.field-error').last().should('contain', 'Compte bloqué');
+  });
+
+  it('utilise le message par défaut si l’API ne fournit pas de détail', () => {
+    cy.intercept('POST', '**/api/auth/login', {
+      statusCode: 200,
+      body: { token: 'invalid-token' },
+    }).as('invalidLogin');
+
+    cy.visit('/login');
+    cy.get('#login-email').type('alice@example.com');
+    cy.get('#login-password').type('wrong');
+    cy.get('button.submit').click();
+
+    cy.wait('@invalidLogin');
+    cy.get('.field-error').last().should('contain', 'Identifiants incorrects');
+  });
 });

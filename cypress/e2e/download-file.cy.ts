@@ -52,4 +52,44 @@ describe('Download file page', () => {
     cy.wait('@missingFile');
     cy.get('.notice-error').should('contain', 'introuvable');
   });
+
+  it('affiche un message pour un fichier expiré', () => {
+    cy.intercept('GET', '**/api/shares/expired-token', {
+      body: {
+        name: 'old.pdf',
+        mimeType: 'application/pdf',
+        size: 4,
+        expirationDate: '2020-01-01T00:00:00Z',
+        passwordRequired: false,
+      },
+    }).as('expiredFile');
+
+    cy.visit('/download/expired-token');
+    cy.wait('@expiredFile');
+    cy.get('.notice-error').should('contain', 'expiré');
+    cy.get('.download-button').should('not.exist');
+  });
+
+  it('affiche une erreur si le téléchargement échoue', () => {
+    cy.intercept('GET', '**/api/shares/failing-token', {
+      body: {
+        name: 'protected.txt',
+        mimeType: 'text/plain',
+        size: 4,
+        expirationDate: '2030-01-01T00:00:00Z',
+        passwordRequired: true,
+      },
+    }).as('failingFile');
+    cy.intercept('POST', '**/api/shares/failing-token/download', {
+      statusCode: 403,
+      body: {},
+    }).as('downloadError');
+
+    cy.visit('/download/failing-token');
+    cy.wait('@failingFile');
+    cy.get('#download-password').type('wrong');
+    cy.get('.download-button').click();
+    cy.wait('@downloadError');
+    cy.get('.notice-error').should('contain', 'Mot de passe incorrect');
+  });
 });

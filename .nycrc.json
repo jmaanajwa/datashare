@@ -1,0 +1,11 @@
+{
+  "report-dir": "coverage/cypress",
+  "temp-dir": "coverage/.nyc-cypress",
+  "reporter": [
+    "text",
+    "html",
+    "json",
+    "json-summary",
+    "lcov"
+  ]
+}
